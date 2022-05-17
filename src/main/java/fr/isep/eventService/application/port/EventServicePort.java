@@ -9,7 +9,8 @@ import java.util.Optional;
 public interface EventServicePort {
     Event saveEvent(EventDto eventDto);
 
-    Optional<Event> getEvent(Long eventId);
+    Event getEvent(String eventId);
 
     List<Event> getEvents();
+
 }

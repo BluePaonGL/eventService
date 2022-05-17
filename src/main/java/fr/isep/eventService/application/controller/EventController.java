@@ -13,20 +13,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/event")
 @Validated
 public class EventController {
 
     private final EventServicePort eventServicePort;
 
-    @PostMapping()
-    public ResponseEntity<Event> createEvent(/*@Valid*/ @RequestBody EventDto eventDto) {
+    @PostMapping("/addEvent")
+    public ResponseEntity<Event> createEvent(@RequestBody EventDto eventDto) {
         return ResponseEntity.ok(this.eventServicePort.saveEvent(eventDto));
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Event>> getAllUser() {
+    @GetMapping("/events")
+    public ResponseEntity<List<Event>> getAllEvent() {
         return new ResponseEntity<>(this.eventServicePort.getEvents(), HttpStatus.OK);
     }
+
 
 }

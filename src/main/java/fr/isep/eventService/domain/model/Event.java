@@ -4,30 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name="`event`")
+@Data
 public class Event {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long eventId;
-
-    private String name;
+    private String eventId;
+    private String event_name;
     private String starting_campus;
     private String location;
-
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    @Temporal(TemporalType.TIME)
+    private Date event_date;
     private Date starting_time;
-
-
 
 }
