@@ -13,4 +13,6 @@ public interface EventServicePort {
 
     List<Event> getEvents();
 
+    void deleteEvent(String eventId);
+
 }

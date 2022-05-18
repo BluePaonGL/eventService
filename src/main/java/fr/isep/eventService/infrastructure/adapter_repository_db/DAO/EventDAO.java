@@ -2,6 +2,7 @@ package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,8 +16,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EventDAO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String eventId;
 
     private String event_name;

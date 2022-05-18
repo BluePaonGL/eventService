@@ -29,5 +29,15 @@ public class EventController {
         return new ResponseEntity<>(this.eventServicePort.getEvents(), HttpStatus.OK);
     }
 
+    @GetMapping("/findEvent/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable String id){
+        return new ResponseEntity<>(this.eventServicePort.getEvent(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteEvent/{id}")
+    public void deleteEvent(@PathVariable String id){
+        this.eventServicePort.deleteEvent(id);
+    }
+
 
 }

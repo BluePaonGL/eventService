@@ -11,4 +11,6 @@ public interface EventRepositoryPort {
 
     List<Event> findAll();
 
+    void deleteEvent(String eventId);
+
 }

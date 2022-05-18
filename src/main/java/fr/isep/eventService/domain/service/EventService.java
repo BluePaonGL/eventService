@@ -26,17 +26,21 @@ public class EventService implements EventServicePort {
     @Override
     public Event saveEvent(EventDto eventDto) {
         Event event = modelMapper.map(eventDto, Event.class);
-        this.eventRepositoryPort.save(event);
-        return event;
+        return this.eventRepositoryPort.save(event);
     }
     @Override
     public Event getEvent(String eventId) {
-        return eventRepositoryPort.findByEventId(eventId);
+        return this.eventRepositoryPort.findByEventId(eventId);
     }
 
     @Override
     public List<Event> getEvents() {
-        return eventRepositoryPort.findAll();
+        return this.eventRepositoryPort.findAll();
+    }
+
+    @Override
+    public void deleteEvent(String eventId) {
+        this.eventRepositoryPort.deleteEvent(eventId);
     }
 
 }

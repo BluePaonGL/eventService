@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,11 +32,22 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
 
     @Override
     public Event save(Event event) {
-        return null;
+        EventDAO eventDAO = modelMapper.map(event, EventDAO.class);
+        return modelMapper.map(this.eventRepository.save(eventDAO), Event.class);
     }
 
     @Override
     public List<Event> findAll() {
-        return null;
+        List<EventDAO> listDAO = this.eventRepository.findAll();
+        List<Event> result = new ArrayList<>();
+        for (int i = 0; i < listDAO.size(); i++) {
+            result.add(modelMapper.map(listDAO.get(i), Event.class));
+        }
+        return result;
+    }
+
+    @Override
+    public void deleteEvent(String eventId) {
+        this.eventRepository.delete(this.eventRepository.findByEventId(eventId));
     }
 }
