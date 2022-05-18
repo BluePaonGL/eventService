@@ -1,9 +1,7 @@
 package fr.isep.eventService.application.DTO;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Getter
 @Setter(value = AccessLevel.NONE)
 @NoArgsConstructor
 public class EventDto implements Serializable {

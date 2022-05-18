@@ -1,8 +1,10 @@
 package fr.isep.eventService.application.controller;
 
 import fr.isep.eventService.application.DTO.EventDto;
+import fr.isep.eventService.application.DTO.EventParticipantDto;
 import fr.isep.eventService.application.port.EventServicePort;
 import fr.isep.eventService.domain.model.Event;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +41,10 @@ public class EventController {
         this.eventServicePort.deleteEvent(id);
     }
 
+
+    @PostMapping("/addEventParticipant")
+    public ResponseEntity<EventParticipantDAO> createEventParticipant(@RequestBody EventParticipantDto eventParticipantDTO) {
+        return ResponseEntity.ok(this.eventServicePort.saveEventParticipant(eventParticipantDTO));
+    }
 
 }

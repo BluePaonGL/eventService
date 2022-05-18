@@ -1,8 +1,10 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.domain.model.Event;
+import fr.isep.eventService.domain.model.EventParticipant;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventDAO;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -49,5 +51,10 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     @Override
     public void deleteEvent(String eventId) {
         this.eventRepository.delete(this.eventRepository.findByEventId(eventId));
+    }
+
+    @Override
+    public EventParticipantDAO save(EventParticipant eventParticipant) {
+        return this.eventRepository.save(eventParticipant);
     }
 }

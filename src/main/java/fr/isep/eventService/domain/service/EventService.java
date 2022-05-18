@@ -1,19 +1,19 @@
 package fr.isep.eventService.domain.service;
 
 import fr.isep.eventService.application.DTO.EventDto;
+import fr.isep.eventService.application.DTO.EventParticipantDto;
 import fr.isep.eventService.application.port.EventServicePort;
 import fr.isep.eventService.domain.model.Event;
+import fr.isep.eventService.domain.model.EventParticipant;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
-import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +41,13 @@ public class EventService implements EventServicePort {
     @Override
     public void deleteEvent(String eventId) {
         this.eventRepositoryPort.deleteEvent(eventId);
+    }
+
+    @Override
+    public EventParticipantDAO saveEventParticipant(EventParticipantDto eventParticipantDto) {
+        Event event = getEvent(eventParticipantDto.getEvent());
+        EventParticipant eventParticipant = new EventParticipant(eventParticipantDto.getParticipantId(), event);
+        return this.eventRepositoryPort.save(eventParticipant);
     }
 
 }
