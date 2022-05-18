@@ -16,7 +16,9 @@ public class EventParticipantDAO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String eventParticipantId;
 
-    private String eventId;
-
     private String participantId;
+
+    @ManyToOne
+    @JoinColumn(name = "eventId")
+    private EventDAO event;
 }
