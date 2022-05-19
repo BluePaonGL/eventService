@@ -1,6 +1,8 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
+import fr.isep.eventService.domain.model.Event;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,15 +12,14 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="`event_participant`")
+@Builder
 public class EventParticipantDAO {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String eventParticipantId;
 
     private String participantId;
 
-    @ManyToOne
-    @JoinColumn(name = "eventId")
-    private EventDAO event;
+    private String eventId;
 }

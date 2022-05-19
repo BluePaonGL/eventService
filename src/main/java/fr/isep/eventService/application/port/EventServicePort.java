@@ -6,7 +6,6 @@ import fr.isep.eventService.domain.model.Event;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EventServicePort {
     Event saveEvent(EventDto eventDto);

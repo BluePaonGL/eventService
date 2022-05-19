@@ -4,7 +4,6 @@ import fr.isep.eventService.application.DTO.EventDto;
 import fr.isep.eventService.application.DTO.EventParticipantDto;
 import fr.isep.eventService.application.port.EventServicePort;
 import fr.isep.eventService.domain.model.Event;
-import fr.isep.eventService.domain.model.EventParticipant;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,10 @@ public class EventService implements EventServicePort {
     }
     @Override
     public Event getEvent(String eventId) {
-        return this.eventRepositoryPort.findByEventId(eventId);
+        Event event = this.eventRepositoryPort.findByEventId(eventId);
+        event.setParticipantsId(this.eventRepositoryPort.getAllParticipantByEventId(eventId));
+
+        return event;
     }
 
     @Override
@@ -45,9 +47,8 @@ public class EventService implements EventServicePort {
 
     @Override
     public EventParticipantDAO saveEventParticipant(EventParticipantDto eventParticipantDto) {
-        //Event event = getEvent(eventParticipantDto.getEvent());
-        EventParticipant eventParticipant = modelMapper.map(eventParticipantDto, EventParticipant.class);
-        return this.eventRepositoryPort.save(eventParticipant);
+
+        return this.eventRepositoryPort.save(eventParticipantDto);
     }
 
 }

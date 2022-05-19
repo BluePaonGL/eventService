@@ -1,10 +1,11 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
+import fr.isep.eventService.application.DTO.EventParticipantDto;
 import fr.isep.eventService.domain.model.Event;
-import fr.isep.eventService.domain.model.EventParticipant;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventParticipantRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,12 +14,14 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
 public class EventRepositoryAdapter implements EventRepositoryPort {
 
     private EventRepository eventRepository;
+    private final EventParticipantRepository eventParticipantRepository;
 
     private final ModelMapper modelMapper;
 
@@ -42,8 +45,8 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     public List<Event> findAll() {
         List<EventDAO> listDAO = this.eventRepository.findAll();
         List<Event> result = new ArrayList<>();
-        for (int i = 0; i < listDAO.size(); i++) {
-            result.add(modelMapper.map(listDAO.get(i), Event.class));
+        for (EventDAO eventDAO : listDAO) {
+            result.add(modelMapper.map(eventDAO, Event.class));
         }
         return result;
     }
@@ -54,7 +57,17 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     }
 
     @Override
-    public EventParticipantDAO save(EventParticipant eventParticipant) {
-        return this.eventRepository.save(eventParticipant);
+    public EventParticipantDAO save(EventParticipantDto eventParticipant) {
+        EventParticipantDAO eventParticipantDAO = EventParticipantDAO.builder()
+                .eventId(eventParticipant.getEventId())
+                .participantId(eventParticipant.getParticipantId())
+                .build();
+        return this.eventParticipantRepository.save(eventParticipantDAO);
+    }
+
+    public List<String> getAllParticipantByEventId(String eventId) {
+        return this.eventParticipantRepository.getEventParticipantDAOSByEventId(eventId)
+                .stream().map(EventParticipantDAO::getParticipantId)
+                .collect(Collectors.toList());
     }
 }

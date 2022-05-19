@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class EventController {
 
 
     @PostMapping("/addEventParticipant")
-    public ResponseEntity<EventParticipantDAO> createEventParticipant(@RequestBody EventParticipantDto eventParticipantDTO) {
+    public ResponseEntity<EventParticipantDAO> createEventParticipant(@RequestBody @Valid EventParticipantDto eventParticipantDTO) {
         return ResponseEntity.ok(this.eventServicePort.saveEventParticipant(eventParticipantDTO));
     }
 

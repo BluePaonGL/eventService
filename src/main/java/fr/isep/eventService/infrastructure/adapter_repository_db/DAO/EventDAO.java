@@ -1,11 +1,13 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
+import fr.isep.eventService.domain.model.Event;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,6 +31,9 @@ public class EventDAO {
 
     @Temporal(TemporalType.TIME)
     private Date starting_time;
+
+    @OneToMany(targetEntity = EventParticipantDAO.class)
+    private List<EventParticipantDAO> eventParticipantDAO;
 
     @Override
     public boolean equals(Object o) {

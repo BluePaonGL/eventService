@@ -2,7 +2,6 @@ package fr.isep.eventService.domain.model;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -14,5 +13,6 @@ public class Event {
     private String location;
     private Date event_date;
     private Date starting_time;
+    private List<String> participantsId;
 
 }
