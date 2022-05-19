@@ -1,11 +1,9 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.DAO;
+package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
-import fr.isep.eventService.domain.model.MaraudGroup;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 

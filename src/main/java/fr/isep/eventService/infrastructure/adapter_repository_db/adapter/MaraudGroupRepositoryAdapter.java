@@ -1,10 +1,10 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.adapter;
+package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.domain.criteria.MaraudGroupCriteria;
 import fr.isep.eventService.domain.model.MaraudGroup;
 import fr.isep.eventService.domain.port.MaraudGroupRepositoryPort;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupDao;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.repository.MaraudGroupRepository;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupRepository;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
