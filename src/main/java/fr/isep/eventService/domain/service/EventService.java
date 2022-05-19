@@ -45,8 +45,8 @@ public class EventService implements EventServicePort {
 
     @Override
     public EventParticipantDAO saveEventParticipant(EventParticipantDto eventParticipantDto) {
-        Event event = getEvent(eventParticipantDto.getEvent());
-        EventParticipant eventParticipant = new EventParticipant(eventParticipantDto.getParticipantId(), event);
+        //Event event = getEvent(eventParticipantDto.getEvent());
+        EventParticipant eventParticipant = modelMapper.map(eventParticipantDto, EventParticipant.class);
         return this.eventRepositoryPort.save(eventParticipant);
     }
 

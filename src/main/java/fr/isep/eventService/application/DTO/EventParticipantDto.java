@@ -11,5 +11,5 @@ public class EventParticipantDto {
 
     private String participantId;
 
-    private String event;
+    private Event event;
 }
