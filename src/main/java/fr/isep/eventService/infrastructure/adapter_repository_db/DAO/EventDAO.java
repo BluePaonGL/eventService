@@ -32,6 +32,11 @@ public class EventDAO {
     @Temporal(TemporalType.TIME)
     private Date starting_time;
 
+    @Temporal(TemporalType.TIME)
+    private Date ending_time;
+
+    private String description;
+
     @OneToMany(targetEntity = EventParticipantDAO.class)
     private List<EventParticipantDAO> eventParticipantDAO;
 

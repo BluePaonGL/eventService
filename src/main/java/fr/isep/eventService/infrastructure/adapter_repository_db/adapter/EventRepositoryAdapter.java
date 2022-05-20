@@ -70,4 +70,20 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
                 .stream().map(EventParticipantDAO::getParticipantId)
                 .collect(Collectors.toList());
     }
+
+    public List<Event> getAllEventsByParticipantId(String eventParticipantId){
+
+        List<String> eventIdList = this.eventParticipantRepository.getEventParticipantDAOSByParticipantId(eventParticipantId)
+                .stream().map(EventParticipantDAO::getEventId)
+                .collect(Collectors.toList());
+        List<Event> result = new ArrayList<>();
+        for (String eventId : eventIdList) {
+            result.add(this.modelMapper.map(this.eventRepository.findByEventId(eventId), Event.class));
+        }
+        return result;
+    }
+
+    public void deleteEventParticipant(String eventId, String participantId){
+        this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, participantId));
+    }
 }

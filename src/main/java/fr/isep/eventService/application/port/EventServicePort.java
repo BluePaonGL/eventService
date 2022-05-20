@@ -18,4 +18,8 @@ public interface EventServicePort {
 
     EventParticipantDAO saveEventParticipant(EventParticipantDto eventParticipantDto);
 
+    List<Event> getEventsByParticipantId(String participantId);
+
+    void deleteParticipant(String eventId, String participantId);
+
 }

@@ -19,4 +19,8 @@ public interface EventRepositoryPort {
 
     List<String> getAllParticipantByEventId(String eventId);
 
+    List<Event> getAllEventsByParticipantId(String participantId);
+
+    void deleteEventParticipant(String eventId, String participantId);
+
 }
