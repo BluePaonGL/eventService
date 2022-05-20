@@ -16,5 +16,4 @@ public class Event {
     private Date endingTime;
     private String description;
     private List<String> participantsId;
-
 }
