@@ -17,19 +17,19 @@ import java.util.List;
 public class EventDto implements Serializable {
     @NotNull
     @NotEmpty
-    private String event_name;
+    private String name;
 
-    private String starting_campus;
+    private String startingCampus;
 
     private String location;
 
     @NotNull
     @NotEmpty
-    private Date event_date;
+    private Date date;
 
-    private Time starting_time;
+    private Time startingTime;
 
-    private Time ending_time;
+    private Time endingTime;
 
     private String description;
 

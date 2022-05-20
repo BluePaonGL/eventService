@@ -22,18 +22,18 @@ public class EventDAO {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String eventId;
 
-    private String event_name;
-    private String starting_campus;
+    private String name;
+    private String startingCampus;
     private String location;
 
     @Temporal(TemporalType.DATE)
-    private Date event_date;
+    private Date date;
 
     @Temporal(TemporalType.TIME)
-    private Date starting_time;
+    private Date startingTime;
 
     @Temporal(TemporalType.TIME)
-    private Date ending_time;
+    private Date endingTime;
 
     private String description;
 

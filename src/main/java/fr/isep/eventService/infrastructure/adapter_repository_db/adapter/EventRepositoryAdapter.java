@@ -9,6 +9,7 @@ import fr.isep.eventService.infrastructure.adapter_repository_db.repository.Even
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -43,12 +44,9 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
 
     @Override
     public List<Event> findAll() {
-        List<EventDAO> listDAO = this.eventRepository.findAll();
-        List<Event> result = new ArrayList<>();
-        for (EventDAO eventDAO : listDAO) {
-            result.add(modelMapper.map(eventDAO, Event.class));
-        }
-        return result;
+        List<EventDAO> listDAO = this.eventRepository.findAll(Sort.by(Sort.Direction.ASC, "date").and(Sort.by(Sort.Direction.ASC, "startingTime")));
+
+        return listDAO.stream().map(event -> modelMapper.map(event, Event.class)).collect(Collectors.toList());
     }
 
     @Override
