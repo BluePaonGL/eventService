@@ -20,6 +20,7 @@ public class EventDto implements Serializable {
     private String event_name;
 
     private String starting_campus;
+
     private String location;
 
     @NotNull
@@ -27,6 +28,10 @@ public class EventDto implements Serializable {
     private Date event_date;
 
     private Time starting_time;
+
+    private Time ending_time;
+
+    private String description;
 
     private List<String> participants;
 

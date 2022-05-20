@@ -47,8 +47,22 @@ public class EventService implements EventServicePort {
 
     @Override
     public EventParticipantDAO saveEventParticipant(EventParticipantDto eventParticipantDto) {
-
         return this.eventRepositoryPort.save(eventParticipantDto);
+    }
+
+    @Override
+    public List<String> getParticipantsByEventId(String eventId) {
+        return this.eventRepositoryPort.getAllParticipantByEventId(eventId);
+    }
+
+    @Override
+    public List<String> getEventsByParticipantId(String participantId) {
+        return this.eventRepositoryPort.getAllEventsByParticipantId(participantId);
+    }
+
+    @Override
+    public void deleteParticipant(String eventId, String participantId) {
+        this.eventRepositoryPort.deleteEventParticipant(eventId, participantId);
     }
 
 }

@@ -13,6 +13,8 @@ public class Event {
     private String location;
     private Date event_date;
     private Date starting_time;
+    private Date ending_time;
+    private String description;
     private List<String> participantsId;
 
 }

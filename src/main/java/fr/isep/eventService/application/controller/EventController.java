@@ -48,4 +48,19 @@ public class EventController {
         return ResponseEntity.ok(this.eventServicePort.saveEventParticipant(eventParticipantDTO));
     }
 
+    @GetMapping("/participantsByEventId/{eventId}")
+    public List<String> getParticipantsByEventId(@PathVariable String eventId){
+        return this.eventServicePort.getParticipantsByEventId(eventId);
+    }
+
+    @GetMapping("/eventsByParticipantId/{participantId}")
+    public List<String> getEventsByParticipantId(@PathVariable String participantId){
+        return this.eventServicePort.getEventsByParticipantId(participantId);
+    }
+
+    @DeleteMapping("/deleteParticipant/{eventId}/{participantId}")
+    public void deleteEventParticipant(@PathVariable String eventId, @PathVariable String participantId){
+        this.eventServicePort.deleteParticipant(eventId, participantId);
+    }
+
 }
