@@ -8,7 +8,9 @@ import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventPartic
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventParticipantRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Slf4j
 @AllArgsConstructor
 @Component
 public class EventRepositoryAdapter implements EventRepositoryPort {
@@ -57,33 +60,33 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     }
 
     @Override
-    public EventParticipantDAO save(EventParticipantDto eventParticipant) {
+    public EventParticipantDAO save(EventParticipantDto eventParticipant) throws DuplicateKeyException {
+        EventDAO eventDAO = this.eventRepository.findByEventId(eventParticipant.getEventId());
+        if(this.getAllParticipantByEventId(eventParticipant.getEventId()).contains(eventParticipant.getParticipantId())) {
+            throw new DuplicateKeyException("This user is already registered to this event");
+        }
+
         EventParticipantDAO eventParticipantDAO = EventParticipantDAO.builder()
-                .eventId(eventParticipant.getEventId())
+                .event(eventDAO)
                 .participantId(eventParticipant.getParticipantId())
                 .build();
         return this.eventParticipantRepository.save(eventParticipantDAO);
     }
 
     public List<String> getAllParticipantByEventId(String eventId) {
-        return this.eventParticipantRepository.getEventParticipantDAOSByEventId(eventId)
+        return this.eventParticipantRepository.getEventParticipantDAOSByEvent_EventId(eventId)
                 .stream().map(EventParticipantDAO::getParticipantId)
                 .collect(Collectors.toList());
     }
 
     public List<Event> getAllEventsByParticipantId(String eventParticipantId){
 
-        List<String> eventIdList = this.eventParticipantRepository.getEventParticipantDAOSByParticipantId(eventParticipantId)
-                .stream().map(EventParticipantDAO::getEventId)
-                .collect(Collectors.toList());
-        List<Event> result = new ArrayList<>();
-        for (String eventId : eventIdList) {
-            result.add(this.modelMapper.map(this.eventRepository.findByEventId(eventId), Event.class));
-        }
-        return result;
+        List<EventDAO> eventDAOList = this.eventRepository.findByEventParticipantDAOs_ParticipantId(eventParticipantId);
+
+        return eventDAOList.stream().map(eventDAO -> modelMapper.map(eventDAO, Event.class)).collect(Collectors.toList());
     }
 
     public void deleteEventParticipant(String eventId, String participantId){
-        this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, participantId));
+        this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEvent_EventIdAndParticipantId(eventId, participantId));
     }
 }

@@ -1,6 +1,5 @@
 package fr.isep.eventService.application.DTO;
 
-import fr.isep.eventService.domain.model.Event;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;

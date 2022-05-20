@@ -6,9 +6,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
@@ -18,7 +16,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EventDAO {
 
-    @Id @GeneratedValue(generator="system-uuid")
+    @Id
+    @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String eventId;
 
@@ -37,8 +36,8 @@ public class EventDAO {
 
     private String description;
 
-    @OneToMany(targetEntity = EventParticipantDAO.class)
-    private List<EventParticipantDAO> eventParticipantDAO;
+    @OneToMany(mappedBy = "event", orphanRemoval = true)
+    private Set<EventParticipantDAO> eventParticipantDAOs = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

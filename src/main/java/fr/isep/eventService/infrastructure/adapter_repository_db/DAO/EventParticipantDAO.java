@@ -1,10 +1,11 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
-import fr.isep.eventService.domain.model.Event;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -21,5 +22,22 @@ public class EventParticipantDAO {
 
     private String participantId;
 
-    private String eventId;
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private EventDAO event;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        EventParticipantDAO that = (EventParticipantDAO) o;
+        return eventParticipantId != null && Objects.equals(eventParticipantId, that.eventParticipantId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
