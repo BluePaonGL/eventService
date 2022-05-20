@@ -5,6 +5,7 @@ import fr.isep.eventService.application.DTO.EventParticipantDto;
 import fr.isep.eventService.application.port.EventServicePort;
 import fr.isep.eventService.domain.model.Event;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,11 @@ public class EventService implements EventServicePort {
 
     @Override
     public List<Event> getEvents() {
-        return this.eventRepositoryPort.findAll();
+        List<Event> result = this.eventRepositoryPort.findAll();
+        for (Event event : result) {
+            event.setParticipantsId(this.eventRepositoryPort.getAllParticipantByEventId(event.getEventId()));
+        }
+        return result;
     }
 
     @Override
@@ -50,14 +55,14 @@ public class EventService implements EventServicePort {
         return this.eventRepositoryPort.save(eventParticipantDto);
     }
 
-    @Override
-    public List<String> getParticipantsByEventId(String eventId) {
-        return this.eventRepositoryPort.getAllParticipantByEventId(eventId);
-    }
 
     @Override
-    public List<String> getEventsByParticipantId(String participantId) {
-        return this.eventRepositoryPort.getAllEventsByParticipantId(participantId);
+    public List<Event> getEventsByParticipantId(String participantId) {
+        List<Event> result = this.eventRepositoryPort.getAllEventsByParticipantId(participantId);
+        for (Event event : result) {
+            event.setParticipantsId(this.eventRepositoryPort.getAllParticipantByEventId(event.getEventId()));
+        }
+        return result;
     }
 
     @Override

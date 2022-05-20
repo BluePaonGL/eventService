@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -48,14 +49,9 @@ public class EventController {
         return ResponseEntity.ok(this.eventServicePort.saveEventParticipant(eventParticipantDTO));
     }
 
-    @GetMapping("/participantsByEventId/{eventId}")
-    public List<String> getParticipantsByEventId(@PathVariable String eventId){
-        return this.eventServicePort.getParticipantsByEventId(eventId);
-    }
-
     @GetMapping("/eventsByParticipantId/{participantId}")
-    public List<String> getEventsByParticipantId(@PathVariable String participantId){
-        return this.eventServicePort.getEventsByParticipantId(participantId);
+    public ResponseEntity<List<Event>> getEventsByParticipantId(@PathVariable String participantId){
+        return ResponseEntity.ok(this.eventServicePort.getEventsByParticipantId(participantId));
     }
 
     @DeleteMapping("/deleteParticipant/{eventId}/{participantId}")
