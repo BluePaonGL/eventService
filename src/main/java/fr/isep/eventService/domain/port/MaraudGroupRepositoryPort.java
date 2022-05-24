@@ -11,10 +11,12 @@ public interface MaraudGroupRepositoryPort {
     MaraudGroup findById(String groupId);
     MaraudGroup findByEventId(String eventId);
     MaraudGroup findByGroupLabel(String groupLabel);
+    List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId);
 
     Page<MaraudGroup> pageMaraudGroup(MaraudGroupCriteria maraudGroupCriteria);
-    MaraudGroupDao saveMaraudGroup(MaraudGroupDao maraudGroupDao);
-    //Add user to group ?
+
+    MaraudGroupDao saveMaraudGroup(MaraudGroup maraudGroup);
+    MaraudGroupDao addUserToMaraudGroup(MaraudGroupDao maraudGroupDao, String userId);
     List<MaraudGroup> findAll();
 
     void delete(String groupId);

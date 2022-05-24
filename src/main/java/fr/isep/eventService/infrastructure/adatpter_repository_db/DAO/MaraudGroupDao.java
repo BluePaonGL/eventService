@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -21,6 +22,8 @@ public class MaraudGroupDao {
     private String groupId;
     private String eventId;
     private String groupLabel;
+    @ElementCollection
+    private List<String> listOfUsers;
 
     @Override
     public boolean equals(Object o) {
