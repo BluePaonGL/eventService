@@ -1,5 +1,6 @@
 package fr.isep.eventService.application.DTO;
 
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventType;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,6 +19,8 @@ public class EventDto implements Serializable {
     @NotNull
     @NotEmpty
     private String name;
+
+    private EventType eventType;
 
     private String startingCampus;
 

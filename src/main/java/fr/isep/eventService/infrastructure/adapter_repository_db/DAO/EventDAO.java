@@ -23,6 +23,11 @@ public class EventDAO {
     private String eventId;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="event_type")
+    private EventType eventType;
+
     private String startingCampus;
     private String location;
 
