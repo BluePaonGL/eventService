@@ -1,6 +1,5 @@
 package fr.isep.eventService.infrastructure.adatpter_repository_db.repository;
 
-import fr.isep.eventService.domain.model.MaraudGroup;
 import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,6 +9,6 @@ public interface MaraudGroupRepository extends JpaRepository<MaraudGroupDao, Lon
     MaraudGroupDao findByGroupId(String groupId);
     MaraudGroupDao findByEventId(String eventId);
     MaraudGroupDao findByGroupLabel(String groupLabel);
-    List<MaraudGroupDao> findMaraudGroupDaoByListOfUsersIn(String userId);
+    List<MaraudGroupDao> findMaraudGroupDaoByListOfUsersContains(String userId);
 
 }

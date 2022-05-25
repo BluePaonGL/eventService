@@ -53,7 +53,7 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     @Override
     public List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId){
-        List<MaraudGroupDao> maraudGroupDaoList =this.maraudGroupRepository.findMaraudGroupDaoByListOfUsersIn(userId);
+        List<MaraudGroupDao> maraudGroupDaoList =this.maraudGroupRepository.findMaraudGroupDaoByListOfUsersContains(userId);
         return maraudGroupDaoList.stream()
                 .map(maraudGroupDao -> this.modelMapper.map(maraudGroupDao, MaraudGroup.class))
                 .collect(Collectors.toList());
