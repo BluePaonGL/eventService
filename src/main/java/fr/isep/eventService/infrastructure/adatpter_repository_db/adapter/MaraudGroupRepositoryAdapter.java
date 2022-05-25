@@ -24,17 +24,18 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     public MaraudGroup findById(String groupId){
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByGroupId(groupId);
         try{
-            return modelMapper.map(maraudGroupDao, MaraudGroup.class);
+            return this.modelMapper.map(maraudGroupDao, MaraudGroup.class);
         } catch (IllegalArgumentException exception){
             throw new IllegalArgumentException("This group does not exist in the database", exception);
         }
     }
 
+    //TODO return list ?
     @Override
     public MaraudGroup findByEventId(String eventId){
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByEventId(eventId);
         try{
-            return modelMapper.map(maraudGroupDao, MaraudGroup.class);
+            return this.modelMapper.map(maraudGroupDao, MaraudGroup.class);
         } catch (IllegalArgumentException exception){
             throw new IllegalArgumentException("This event does not exist in the database", exception);
         }
@@ -44,7 +45,7 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     public MaraudGroup findByGroupLabel(String groupLabel){
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByGroupLabel(groupLabel);
         try{
-            return modelMapper.map(maraudGroupDao, MaraudGroup.class);
+            return this.modelMapper.map(maraudGroupDao, MaraudGroup.class);
         } catch (IllegalArgumentException exception){
             throw new IllegalArgumentException("This group does not exist in the database", exception);
         }
@@ -59,15 +60,15 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     }
 
     @Override
-    public MaraudGroupDao saveMaraudGroup(MaraudGroup maraudGroup){
-        MaraudGroupDao maraudGroupDao = modelMapper.map(maraudGroup, MaraudGroupDao.class);
-        return maraudGroupRepository.save(maraudGroupDao);
+    public MaraudGroup saveMaraudGroup(MaraudGroup maraudGroup){
+        MaraudGroupDao maraudGroupDao = this.modelMapper.map(maraudGroup, MaraudGroupDao.class);
+        return this.modelMapper.map(this.maraudGroupRepository.save(maraudGroupDao), MaraudGroup.class);
     }
 
     @Override
     public List<MaraudGroup> findAll(){
         return this.maraudGroupRepository.findAll()
-                .stream().map(maraudGroupDao -> modelMapper.map(maraudGroupDao, MaraudGroup.class))
+                .stream().map(maraudGroupDao -> this.modelMapper.map(maraudGroupDao, MaraudGroup.class))
                 .collect(Collectors.toList());
     }
 
@@ -78,17 +79,19 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     }
 
     //TODO save here ?
+    //TODO TEST
     @Override
-    public MaraudGroupDao addUserToMaraudGroup(MaraudGroupDao maraudGroupDao, String userId){
+    public MaraudGroup addUserToMaraudGroup(String groupId, String userId){
+        MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByGroupId(groupId);
         List<String> listOfUsers = maraudGroupDao.getListOfUsers();
         listOfUsers.add(userId);
         maraudGroupDao.setListOfUsers(listOfUsers);
-        return maraudGroupRepository.save(maraudGroupDao);
+        return this.modelMapper.map(this.maraudGroupRepository.save(maraudGroupDao), MaraudGroup.class);
     }
 
     @Override
     public void delete(String groupId){
-        MaraudGroupDao maraudGroupDao = maraudGroupRepository.getById(Long.valueOf(groupId));
-        maraudGroupRepository.delete(maraudGroupDao);
+        MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.getById(Long.valueOf(groupId));
+        this.maraudGroupRepository.delete(maraudGroupDao);
     }
 }
