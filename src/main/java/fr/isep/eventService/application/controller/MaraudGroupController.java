@@ -52,9 +52,4 @@ public class MaraudGroupController {
     public ResponseEntity<List<MaraudGroup>> getListOfMaraudGroupByUserIdIn(@PathVariable String userId){
         return new ResponseEntity<>(this.maraudGroupServicePort.getListOfMaraudGroupByUserIdIn(userId), HttpStatus.OK);
     }
-
-    @GetMapping("/{groupId}/adduser/{userId}")
-    public ResponseEntity<MaraudGroup> addUserToMaraudGroup(@PathVariable String groupId, String userId){
-        return new ResponseEntity<>(this.maraudGroupServicePort.addUserToMaraudGroup(groupId, userId), HttpStatus.OK);
-    }
 }

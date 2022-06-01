@@ -16,7 +16,5 @@ public interface MaraudGroupServicePort {
 
     List<MaraudGroup> getMaraudsGroups();
 
-    MaraudGroup addUserToMaraudGroup(String groupId, String userId);
-
     //TODO page maraudGroup ?
 }

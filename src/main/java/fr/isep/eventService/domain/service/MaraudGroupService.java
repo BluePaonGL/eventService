@@ -41,17 +41,12 @@ public class MaraudGroupService implements MaraudGroupServicePort {
 
     @Override
     public MaraudGroup saveMaraudGroup(MaraudGroupDto maraudGroupDto){
-        MaraudGroup maraudGroup = modelMapper.map(maraudGroupDto, MaraudGroup.class);
+        MaraudGroup maraudGroup = this.modelMapper.map(maraudGroupDto, MaraudGroup.class);
         return this.maraudGroupRepositoryPort.saveMaraudGroup(maraudGroup);
     }
 
     @Override
     public List<MaraudGroup> getMaraudsGroups(){
         return this.maraudGroupRepositoryPort.findAll();
-    }
-
-    @Override
-    public MaraudGroup addUserToMaraudGroup(String groupId, String userId){
-        return this.maraudGroupRepositoryPort.addUserToMaraudGroup(groupId ,userId);
     }
 }

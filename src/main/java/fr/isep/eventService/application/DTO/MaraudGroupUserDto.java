@@ -1,21 +1,19 @@
 package fr.isep.eventService.application.DTO;
 
-import com.sun.istack.NotNull;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @Setter(value = AccessLevel.NONE)
-public class MaraudGroupDto {
+public class MaraudGroupUserDto {
     @NotNull
     @NotEmpty
-    private String groupLabel;
-    //TODO eventId ?
+    private String userId;
 }
