@@ -23,7 +23,7 @@ import java.util.List;
 public class MaraudGroupController {
     private final MaraudGroupServicePort maraudGroupServicePort;
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<MaraudGroup> createMaraudGroup(@Valid @RequestBody MaraudGroupDto maraudGroupDto){
         return ResponseEntity.ok(this.maraudGroupServicePort.saveMaraudGroup(maraudGroupDto));
     }
@@ -52,4 +52,6 @@ public class MaraudGroupController {
     public ResponseEntity<List<MaraudGroup>> getListOfMaraudGroupByUserIdIn(@PathVariable String userId){
         return new ResponseEntity<>(this.maraudGroupServicePort.getListOfMaraudGroupByUserIdIn(userId), HttpStatus.OK);
     }
+
+    //TODO faire le delete et implémenter les user
 }
