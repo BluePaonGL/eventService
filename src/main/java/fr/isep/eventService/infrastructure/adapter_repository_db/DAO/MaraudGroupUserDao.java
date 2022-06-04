@@ -1,4 +1,4 @@
-package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
+package fr.isep.eventService.infrastructure.adatpter_repository_db.DAO;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -8,35 +8,27 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaraudGroupDao {
+public class MaraudGroupUserDao {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String groupId;
-    private String eventId;
-    private String groupLabel;
+    private String userId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "MaraudGroupUser",
-            joinColumns = @JoinColumn(name = "groupId"),
-            inverseJoinColumns = @JoinColumn(name = "userId")
-    )
-    Set<MaraudGroupUserDao> users;
+    @ManyToMany(mappedBy = "users")
+    Set<MaraudGroupDao> listOfMaraudGroups;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        MaraudGroupDao that = (MaraudGroupDao) o;
-        return groupId != null && Objects.equals(groupId, that.groupId);
+        MaraudGroupUserDao that = (MaraudGroupUserDao) o;
+        return userId != null && Objects.equals(userId, that.userId);
     }
 
     @Override
