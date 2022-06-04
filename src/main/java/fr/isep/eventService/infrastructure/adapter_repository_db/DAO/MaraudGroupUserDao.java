@@ -1,5 +1,6 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.DAO;
+package fr.isep.eventService.infrastructure.adapter_repository_db.DAO;
 
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;

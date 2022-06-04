@@ -1,7 +1,6 @@
 package fr.isep.eventService.domain.port;
 
 import fr.isep.eventService.domain.model.MaraudGroupUser;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupUserDao;
 
 import java.util.List;
 

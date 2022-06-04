@@ -1,6 +1,6 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.repository;
+package fr.isep.eventService.infrastructure.adapter_repository_db.repository;
 
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupUserDao;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupUserDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

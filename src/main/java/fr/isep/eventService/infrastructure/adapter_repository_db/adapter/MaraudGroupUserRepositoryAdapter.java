@@ -1,10 +1,10 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.adapter;
+package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 
 import fr.isep.eventService.domain.model.MaraudGroupUser;
 import fr.isep.eventService.domain.port.MaraudGroupUserRepositoryPort;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupUserDao;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.repository.MaraudGroupUserRepository;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupUserDao;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupUserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

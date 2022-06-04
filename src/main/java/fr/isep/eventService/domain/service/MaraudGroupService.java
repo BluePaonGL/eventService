@@ -4,7 +4,6 @@ import fr.isep.eventService.application.DTO.MaraudGroupDto;
 import fr.isep.eventService.application.port.MaraudGroupServicePort;
 import fr.isep.eventService.domain.model.MaraudGroup;
 import fr.isep.eventService.domain.port.MaraudGroupRepositoryPort;
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

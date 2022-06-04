@@ -1,6 +1,6 @@
-package fr.isep.eventService.infrastructure.adatpter_repository_db.helper;
+package fr.isep.eventService.infrastructure.adapter_repository_db.helper;
 
-import fr.isep.eventService.infrastructure.adatpter_repository_db.DAO.MaraudGroupDao;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
