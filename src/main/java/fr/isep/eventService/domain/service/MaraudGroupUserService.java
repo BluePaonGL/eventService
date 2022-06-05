@@ -4,6 +4,7 @@ import fr.isep.eventService.application.DTO.MaraudGroupUserDto;
 import fr.isep.eventService.application.port.MaraudGroupUserServicePort;
 import fr.isep.eventService.domain.model.MaraudGroupUser;
 import fr.isep.eventService.domain.port.MaraudGroupUserRepositoryPort;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MaraudGroupUserService implements MaraudGroupUserServicePort {
 
     private final MaraudGroupUserRepositoryPort maraudGroupUserRepositoryPort;
+    //private final EventParticipantDAO
     private final ModelMapper modelMapper;
 
     @Override
@@ -34,4 +36,8 @@ public class MaraudGroupUserService implements MaraudGroupUserServicePort {
     public List<MaraudGroupUser> getMaraudGroupUsers(){
         return this.maraudGroupUserRepositoryPort.findAll();
     }
+
+    //TODO Lister tous participants d'un event -> Récup dans une liste les ID -> Enlever les ID déjà liés à un groupe de l'évent
+
+
 }

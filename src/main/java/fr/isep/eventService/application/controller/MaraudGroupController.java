@@ -53,5 +53,14 @@ public class MaraudGroupController {
         return new ResponseEntity<>(this.maraudGroupServicePort.getListOfMaraudGroupByUserIdIn(userId), HttpStatus.OK);
     }
 
+    @PostMapping("/adduser/{groupId}/{userId}")
+    public ResponseEntity<MaraudGroup> addUserToMaraudGroup(@PathVariable String groupId, @PathVariable String userId){
+        return ResponseEntity.ok(this.maraudGroupServicePort.addUserToMaraudGroup(groupId, userId));
+    }
+
+    @PostMapping("/removeuser/{groupId}/{userId}")
+    public ResponseEntity<MaraudGroup> removeUserFromMaraudGroup(@PathVariable String groupId, @PathVariable String userId){
+        return ResponseEntity.ok(this.maraudGroupServicePort.removeUserFromMaraudGroup(groupId, userId));
+    }
     //TODO faire le delete et implémenter les user
 }

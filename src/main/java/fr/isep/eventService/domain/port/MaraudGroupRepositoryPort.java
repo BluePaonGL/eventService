@@ -16,6 +16,8 @@ public interface MaraudGroupRepositoryPort {
     Page<MaraudGroup> pageMaraudGroup(MaraudGroupCriteria maraudGroupCriteria);
 
     MaraudGroup saveMaraudGroup(MaraudGroup maraudGroup);
+    MaraudGroup addUserToMaraudGroup(MaraudGroup maraudGroup, String userId);
+    MaraudGroup removeUserFromMaraudGroup(MaraudGroup maraudGroup, String userId);
     List<MaraudGroup> findAll();
 
     void delete(String groupId);
