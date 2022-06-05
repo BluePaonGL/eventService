@@ -15,6 +15,8 @@ public interface MaraudGroupServicePort {
     MaraudGroup saveMaraudGroup(MaraudGroupDto maraudGroupDto);
 
     List<MaraudGroup> getMaraudsGroups();
+    MaraudGroup addUserToMaraudGroup(String groupId, String userId);
+    MaraudGroup removeUserFromMaraudGroup(String groupId ,String userId);
 
     //TODO page maraudGroup ?
 }

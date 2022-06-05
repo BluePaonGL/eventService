@@ -2,15 +2,19 @@ package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.domain.criteria.MaraudGroupCriteria;
 import fr.isep.eventService.domain.model.MaraudGroup;
+import fr.isep.eventService.domain.model.MaraudGroupUser;
 import fr.isep.eventService.domain.port.MaraudGroupRepositoryPort;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupUserDao;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     private MaraudGroupRepository maraudGroupRepository;
+    private MaraudGroupUserRepository maraudGroupUserRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -82,5 +87,39 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     public void delete(String groupId){
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.getById(Long.valueOf(groupId));
         this.maraudGroupRepository.delete(maraudGroupDao);
+    }
+
+    @Override
+    public MaraudGroup addUserToMaraudGroup(MaraudGroup maraudGroup, String userId){
+        MaraudGroupDao maraudGroupDao = this.modelMapper.map(maraudGroup, MaraudGroupDao.class);
+        MaraudGroupUserDao maraudGroupUserDao = this.maraudGroupUserRepository.findByUserId(userId);
+
+        Set<MaraudGroupUserDao> setMaraudGroupUser = maraudGroupDao.getUsers();
+        setMaraudGroupUser.add(maraudGroupUserDao);
+        maraudGroupDao.setUsers(setMaraudGroupUser);
+
+        Set<MaraudGroupDao> setMaraudGroup = maraudGroupUserDao.getListOfMaraudGroups();
+        setMaraudGroup.add(maraudGroupDao);
+        maraudGroupUserDao.setListOfMaraudGroups(setMaraudGroup);
+
+        this.modelMapper.map(this.maraudGroupUserRepository.save(maraudGroupUserDao), MaraudGroupUser.class);
+        return this.modelMapper.map(this.maraudGroupRepository.save(maraudGroupDao), MaraudGroup.class);
+    }
+
+    @Override
+    public MaraudGroup removeUserFromMaraudGroup(MaraudGroup maraudGroup, String userId){
+        MaraudGroupDao maraudGroupDao = this.modelMapper.map(maraudGroup, MaraudGroupDao.class);
+        MaraudGroupUserDao maraudGroupUserDao = this.maraudGroupUserRepository.findByUserId(userId);
+
+        Set<MaraudGroupUserDao> setMaraudGroupUser = maraudGroupDao.getUsers();
+        setMaraudGroupUser.remove(maraudGroupUserDao);
+        maraudGroupDao.setUsers(setMaraudGroupUser);
+
+        Set<MaraudGroupDao> setMaraudGroup = maraudGroupUserDao.getListOfMaraudGroups();
+        setMaraudGroup.remove(maraudGroupDao);
+        maraudGroupUserDao.setListOfMaraudGroups(setMaraudGroup);
+
+        this.modelMapper.map(this.maraudGroupUserRepository.save(maraudGroupUserDao), MaraudGroupUser.class);
+        return this.modelMapper.map(this.maraudGroupRepository.save(maraudGroupDao), MaraudGroup.class);
     }
 }
