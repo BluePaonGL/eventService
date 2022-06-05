@@ -39,8 +39,8 @@ public class MaraudGroupController {
     }
 
     @GetMapping("/byeventid/{eventId}")
-    public ResponseEntity<MaraudGroup> getMaraudGroupByEventId(@PathVariable String eventId){
-        return new ResponseEntity<>(this.maraudGroupServicePort.getMaraudGroupByEventId(eventId), HttpStatus.OK);
+    public ResponseEntity<List<MaraudGroup>> getMaraudGroupByEventId(@PathVariable String eventId){
+        return new ResponseEntity<>(this.maraudGroupServicePort.getListOfMaraudGroupByEventId(eventId), HttpStatus.OK);
     }
 
     @GetMapping("/bygrouplabel/{groupLabel}")

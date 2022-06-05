@@ -37,13 +37,11 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     //TODO return list ?
     @Override
-    public MaraudGroup findByEventId(String eventId){
-        MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByEventId(eventId);
-        try{
-            return this.modelMapper.map(maraudGroupDao, MaraudGroup.class);
-        } catch (IllegalArgumentException exception){
-            throw new IllegalArgumentException("This event does not exist in the database", exception);
-        }
+    public List<MaraudGroup> findByEventId(String eventId){
+        List<MaraudGroupDao> maraudGroupDaoList = this.maraudGroupRepository.findAllByEventId(eventId);
+        return maraudGroupDaoList.stream()
+                .map(maraudGroupDao -> this.modelMapper.map(maraudGroupDao, MaraudGroup.class))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -8,5 +8,7 @@ public interface MaraudGroupUserRepositoryPort {
     MaraudGroupUser findById(String userId);
     MaraudGroupUser saveMaraudGroupUser(MaraudGroupUser maraudGroupUser);
     List<MaraudGroupUser> findAll();
+
+    List<MaraudGroupUser> getAllUsersWithNoGroupForEvent(String eventId, List<String> participantsIdList);
     void delete(String userId);
 }

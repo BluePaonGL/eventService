@@ -25,7 +25,7 @@ public class MaraudGroupService implements MaraudGroupServicePort {
     }
 
     @Override
-    public MaraudGroup getMaraudGroupByEventId(String eventId){
+    public List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId){
         return this.maraudGroupRepositoryPort.findByEventId(eventId);
     }
 

@@ -9,4 +9,5 @@ public interface MaraudGroupUserServicePort {
     MaraudGroupUser getMaraudGroupUserById(String userId);
     MaraudGroupUser saveMaraudGroupUser(MaraudGroupUserDto maraudGroupUserDto);
     List<MaraudGroupUser> getMaraudGroupUsers();
+    List<MaraudGroupUser> getAllUsersWithNoGroupForEvent(String eventId);
 }
