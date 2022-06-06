@@ -6,7 +6,7 @@ import fr.isep.eventService.domain.model.MaraudGroupUser;
 import java.util.List;
 
 public interface MaraudGroupUserServicePort {
-    MaraudGroupUser getMaraudGroupUserById(String userId);
+    MaraudGroupUser getMaraudGroupUserByUserId(String userId);
     MaraudGroupUser saveMaraudGroupUser(MaraudGroupUserDto maraudGroupUserDto);
     List<MaraudGroupUser> getMaraudGroupUsers();
     List<MaraudGroupUser> getAllUsersWithNoGroupForEvent(String eventId);

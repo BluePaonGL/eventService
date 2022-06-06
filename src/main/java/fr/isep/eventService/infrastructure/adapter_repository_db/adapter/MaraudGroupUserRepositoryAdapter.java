@@ -24,7 +24,7 @@ public class MaraudGroupUserRepositoryAdapter implements MaraudGroupUserReposito
     private final ModelMapper modelMapper;
 
     @Override
-    public MaraudGroupUser findById(String userId){
+    public MaraudGroupUser findByUserId(String userId){
         MaraudGroupUserDao maraudGroupUserDao = this.maraudGroupUserRepository.findByUserId(userId);
         try{
             return this.modelMapper.map(maraudGroupUserDao, MaraudGroupUser.class);
