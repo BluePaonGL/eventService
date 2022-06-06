@@ -47,4 +47,9 @@ public class MaraudGroupUserRepositoryAdapter implements MaraudGroupUserReposito
         MaraudGroupUserDao maraudGroupUserDao = this.maraudGroupUserRepository.getById(Long.valueOf(userId));
         this.maraudGroupUserRepository.delete(maraudGroupUserDao);
     }
+
+    @Override
+    public List<MaraudGroupUser> getAllUsersWithNoGroupForEvent(String eventId, List<String> participantsIdList){
+        return null;
+    }
 }

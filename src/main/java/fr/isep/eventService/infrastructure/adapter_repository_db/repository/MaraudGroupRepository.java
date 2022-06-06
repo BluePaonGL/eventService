@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MaraudGroupRepository extends JpaRepository<MaraudGroupDao, Long>, JpaSpecificationExecutor<MaraudGroupDao> {
     MaraudGroupDao findByGroupId(String groupId);
-    MaraudGroupDao findByEventId(String eventId);
+    List<MaraudGroupDao> findAllByEventId(String eventId);
     MaraudGroupDao findByGroupLabel(String groupLabel);
     List<MaraudGroupDao> findAllByUsers_UserId(String userId);
 

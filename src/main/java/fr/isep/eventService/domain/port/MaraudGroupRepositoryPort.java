@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MaraudGroupRepositoryPort {
     MaraudGroup findById(String groupId);
-    MaraudGroup findByEventId(String eventId);
+    List<MaraudGroup> findByEventId(String eventId);
     MaraudGroup findByGroupLabel(String groupLabel);
     List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId);
 

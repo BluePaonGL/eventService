@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MaraudGroupServicePort {
     MaraudGroup getMaraudGroupById(String groupId);
-    MaraudGroup getMaraudGroupByEventId(String eventId);
+    List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId);
     MaraudGroup getMaraudGroupByGroupLabel(String groupLabel);
 
     List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId);
