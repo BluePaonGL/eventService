@@ -13,4 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Setter(value = AccessLevel.NONE)
 public class MaraudGroupUserDto {
+    @NotNull
+    @NotEmpty
+    private String userId;
 }

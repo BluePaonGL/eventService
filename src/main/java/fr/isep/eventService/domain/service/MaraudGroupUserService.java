@@ -23,7 +23,7 @@ public class MaraudGroupUserService implements MaraudGroupUserServicePort {
     private final ModelMapper modelMapper;
 
     @Override
-    public MaraudGroupUser getMaraudGroupByUserId(String userId){
+    public MaraudGroupUser getMaraudGroupUserById(String userId){
         return this.maraudGroupUserRepositoryPort.findById(userId);
     }
 
