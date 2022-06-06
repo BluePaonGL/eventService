@@ -1,26 +1,29 @@
 package fr.isep.eventService.domain.port;
 
-import fr.isep.eventService.domain.criteria.MaraudGroupCriteria;
+import fr.isep.eventService.application.DTO.MaraudGroupDto;
+import fr.isep.eventService.application.DTO.MaraudGroupMemberDto;
 import fr.isep.eventService.domain.model.MaraudGroup;
-import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
-import org.springframework.data.domain.Page;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupMemberDAO;
 
 import java.util.List;
 
 public interface MaraudGroupRepositoryPort {
-    MaraudGroup findById(String groupId);
-    List<MaraudGroup> findByEventId(String eventId);
-    MaraudGroup findByGroupLabel(String groupLabel);
-    List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId);
+    MaraudGroup save(MaraudGroup maraudGroup);
 
-    Page<MaraudGroup> pageMaraudGroup(MaraudGroupCriteria maraudGroupCriteria);
-
-    MaraudGroup saveMaraudGroup(MaraudGroup maraudGroup);
-    MaraudGroup addUserToMaraudGroup(MaraudGroup maraudGroup, String userId);
-    MaraudGroup removeUserFromMaraudGroup(MaraudGroup maraudGroup, String userId);
     List<MaraudGroup> findAll();
 
-    List<String> getAllUserInGroup(String groupId);
+    void deleteMaraudGroup(String maraudGroupId);
 
-    void delete(String groupId);
+    MaraudGroup findByMaraudGroupId(String maraudGroupId);
+
+    List<MaraudGroup> getAllMaraudGroupsByEventId(String eventId);
+
+    List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId);
+
+    MaraudGroupMemberDAO save(MaraudGroupMemberDto maraudGroupMemberDto);
+
+    List<String> getAllMemberByMaraudGroupId(String maraudGroupId);
+
+    void deleteMaraudGroupMember(String participantId, String maraudGroupId);
+
 }

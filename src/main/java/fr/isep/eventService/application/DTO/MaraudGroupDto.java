@@ -17,6 +17,9 @@ public class MaraudGroupDto {
     @NotNull
     @NotEmpty
     private String groupLabel;
+
     private String eventId;
-    //TODO eventId ?
+
+    private List<String> members;
+
 }

@@ -1,9 +1,11 @@
 package fr.isep.eventService.domain.service;
 
 import fr.isep.eventService.application.DTO.MaraudGroupDto;
+import fr.isep.eventService.application.DTO.MaraudGroupMemberDto;
 import fr.isep.eventService.application.port.MaraudGroupServicePort;
 import fr.isep.eventService.domain.model.MaraudGroup;
 import fr.isep.eventService.domain.port.MaraudGroupRepositoryPort;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupMemberDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,49 +21,57 @@ public class MaraudGroupService implements MaraudGroupServicePort {
     private final ModelMapper modelMapper;
 
     @Override
-    public MaraudGroup getMaraudGroupById(String groupId){
-        MaraudGroup maraudGroup = this.maraudGroupRepositoryPort.findById(groupId);
-        maraudGroup.setListOfUsers(this.maraudGroupRepositoryPort.getAllUserInGroup(groupId));
+    public MaraudGroup getMaraudGroupById(String maraudGroupId) {
+        MaraudGroup maraudGroup = this.maraudGroupRepositoryPort.findByMaraudGroupId(maraudGroupId);
+        maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroupId));
         return maraudGroup;
     }
 
     @Override
-    public List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId){
-        return this.maraudGroupRepositoryPort.findByEventId(eventId);
+    public List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId) {
+        List<MaraudGroup> result = this.maraudGroupRepositoryPort.getAllMaraudGroupsByEventId(eventId);
+        for (MaraudGroup maraudGroup : result) {
+            maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroup.getMaraudGroupId()));
+        }
+        return result;
     }
 
     @Override
-    public MaraudGroup getMaraudGroupByGroupLabel(String groupLabel){
-        return this.maraudGroupRepositoryPort.findByGroupLabel(groupLabel);
+    public List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId) {
+        List<MaraudGroup> result = this.maraudGroupRepositoryPort.getAllMaraudGroupsByMemberId(memberId);
+        for (MaraudGroup maraudGroup : result) {
+            maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroup.getMaraudGroupId()));
+        }
+        return result;
     }
 
     @Override
-    public List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId){
-        return this.maraudGroupRepositoryPort.getListOfMaraudGroupByUserIdIn(userId);
+    public MaraudGroup saveMaraudGroup(MaraudGroupDto maraudGroupDto) {
+        MaraudGroup maraudGroup = modelMapper.map(maraudGroupDto, MaraudGroup.class);
+        return this.maraudGroupRepositoryPort.save(maraudGroup);
     }
 
     @Override
-    public MaraudGroup saveMaraudGroup(MaraudGroupDto maraudGroupDto){
-        MaraudGroup maraudGroup = this.modelMapper.map(maraudGroupDto, MaraudGroup.class);
-        return this.maraudGroupRepositoryPort.saveMaraudGroup(maraudGroup);
+    public void deleteMaraudGroup(String maraudGroupId) {
+        this.maraudGroupRepositoryPort.deleteMaraudGroup(maraudGroupId);
     }
 
     @Override
-    public List<MaraudGroup> getMaraudsGroups(){
-        return this.maraudGroupRepositoryPort.findAll();
+    public List<MaraudGroup> getMaraudGroups() {
+        List<MaraudGroup> result = this.maraudGroupRepositoryPort.findAll();
+        for (MaraudGroup maraudGroup : result) {
+            maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroup.getMaraudGroupId()));
+        }
+        return result;
     }
 
     @Override
-    public MaraudGroup addUserToMaraudGroup(String groupId, String userId){
-        MaraudGroup maraudGroup = this.maraudGroupRepositoryPort.findById(groupId);
-        maraudGroup = this.maraudGroupRepositoryPort.addUserToMaraudGroup(maraudGroup, userId);
-        maraudGroup.setListOfUsers(this.maraudGroupRepositoryPort.getAllUserInGroup(groupId));
-        return maraudGroup;
+    public MaraudGroupMemberDAO saveMaraudGroupMember(MaraudGroupMemberDto maraudGroupMemberDto) {
+        return this.maraudGroupRepositoryPort.save(maraudGroupMemberDto);
     }
 
     @Override
-    public MaraudGroup removeUserFromMaraudGroup(String groupId, String userId){
-        MaraudGroup maraudGroup = this.maraudGroupRepositoryPort.findById(groupId);
-        return this.maraudGroupRepositoryPort.removeUserFromMaraudGroup(maraudGroup, userId);
+    public void deleteMaraudGroupMember(String participantId, String maraudGroupId) {
+        this.maraudGroupRepositoryPort.deleteMaraudGroupMember(participantId, maraudGroupId);
     }
 }

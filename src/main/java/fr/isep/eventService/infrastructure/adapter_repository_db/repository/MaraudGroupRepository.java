@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface MaraudGroupRepository extends JpaRepository<MaraudGroupDao, Long>, JpaSpecificationExecutor<MaraudGroupDao> {
-    MaraudGroupDao findByGroupId(String groupId);
+    MaraudGroupDao findByMaraudGroupId(String maraudGroupId);
+
     List<MaraudGroupDao> findAllByEventId(String eventId);
-    MaraudGroupDao findByGroupLabel(String groupLabel);
-    List<MaraudGroupDao> findAllByUsers_UserId(String userId);
 
 }

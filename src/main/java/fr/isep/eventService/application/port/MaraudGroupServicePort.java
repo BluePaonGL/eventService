@@ -1,22 +1,27 @@
 package fr.isep.eventService.application.port;
 
 import fr.isep.eventService.application.DTO.MaraudGroupDto;
+import fr.isep.eventService.application.DTO.MaraudGroupMemberDto;
 import fr.isep.eventService.domain.model.MaraudGroup;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupMemberDAO;
 
 import java.util.List;
 
 public interface MaraudGroupServicePort {
-    MaraudGroup getMaraudGroupById(String groupId);
-    List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId);
-    MaraudGroup getMaraudGroupByGroupLabel(String groupLabel);
+    MaraudGroup getMaraudGroupById(String maraudGroupId);
 
-    List<MaraudGroup> getListOfMaraudGroupByUserIdIn(String userId);
+    List<MaraudGroup> getListOfMaraudGroupByEventId(String eventId);
+
+    List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId);
 
     MaraudGroup saveMaraudGroup(MaraudGroupDto maraudGroupDto);
 
-    List<MaraudGroup> getMaraudsGroups();
-    MaraudGroup addUserToMaraudGroup(String groupId, String userId);
-    MaraudGroup removeUserFromMaraudGroup(String groupId ,String userId);
+    void deleteMaraudGroup(String maraudGroupId);
 
-    //TODO page maraudGroup ?
+    List<MaraudGroup> getMaraudGroups();
+
+    MaraudGroupMemberDAO saveMaraudGroupMember(MaraudGroupMemberDto maraudGroupMemberDto);
+
+    void deleteMaraudGroupMember(String participantId, String maraudGroupId);
+
 }
