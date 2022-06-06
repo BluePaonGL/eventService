@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class MaraudGroupUser {
-    private String id;
     private String userId;
 }

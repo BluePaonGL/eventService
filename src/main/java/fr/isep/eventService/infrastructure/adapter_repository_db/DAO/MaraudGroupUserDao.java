@@ -19,7 +19,6 @@ public class MaraudGroupUserDao {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
     private String userId;
 
     @ManyToMany(mappedBy = "users")
@@ -30,7 +29,7 @@ public class MaraudGroupUserDao {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         MaraudGroupUserDao that = (MaraudGroupUserDao) o;
-        return id != null && Objects.equals(id, that.id);
+        return userId != null && Objects.equals(userId, that.userId);
     }
 
     @Override
