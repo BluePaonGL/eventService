@@ -1,12 +1,16 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.application.DTO.EventParticipantDto;
+import fr.isep.eventService.application.DTO.MaraudGroupUserDto;
 import fr.isep.eventService.domain.model.Event;
+import fr.isep.eventService.domain.model.MaraudGroupUser;
 import fr.isep.eventService.domain.port.EventRepositoryPort;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupUserDao;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventParticipantRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.EventRepository;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupUserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -23,6 +27,7 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
 
     private EventRepository eventRepository;
     private final EventParticipantRepository eventParticipantRepository;
+    private final MaraudGroupUserRepository maraudGroupUserRepository;
 
     private final ModelMapper modelMapper;
 
@@ -56,6 +61,10 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
 
     @Override
     public EventParticipantDAO save(EventParticipantDto eventParticipant) {
+        MaraudGroupUserDao maraudGroupUserDao = new MaraudGroupUserDao();
+        maraudGroupUserDao.setUserId(eventParticipant.getParticipantId());
+        this.maraudGroupUserRepository.save(maraudGroupUserDao);
+
         EventParticipantDAO eventParticipantDAO = EventParticipantDAO.builder()
                 .eventId(eventParticipant.getEventId())
                 .participantId(eventParticipant.getParticipantId())
