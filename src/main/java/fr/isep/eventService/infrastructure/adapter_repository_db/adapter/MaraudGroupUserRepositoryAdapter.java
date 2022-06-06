@@ -3,12 +3,15 @@ package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.domain.model.MaraudGroupUser;
 import fr.isep.eventService.domain.port.MaraudGroupUserRepositoryPort;
+import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupUserDao;
+import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupUserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class MaraudGroupUserRepositoryAdapter implements MaraudGroupUserRepositoryPort {
 
     private MaraudGroupUserRepository maraudGroupUserRepository;
+    private final MaraudGroupRepository maraudGroupRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -50,6 +54,22 @@ public class MaraudGroupUserRepositoryAdapter implements MaraudGroupUserReposito
 
     @Override
     public List<MaraudGroupUser> getAllUsersWithNoGroupForEvent(String eventId, List<String> participantsIdList){
-        return null;
+        //TODO récupérer les groups de chaque user, puis l'ajouter à une liste s'il n'a pas de groupe pour cet event
+        List<MaraudGroupUserDao> listOfUsersWithoutGroup = new ArrayList<>();
+        for(String participantId : participantsIdList){
+            List<MaraudGroupDao> maraudGroupDaoList = this.maraudGroupRepository.findAllByUsers_UserId(participantId);
+            boolean hasGroup = false;
+            for(MaraudGroupDao maraudGroupDao : maraudGroupDaoList){
+                if(maraudGroupDao.getEventId() == eventId){
+                    hasGroup = true;
+                }
+            }
+            if(!hasGroup){
+                listOfUsersWithoutGroup.add(this.maraudGroupUserRepository.findByUserId(participantId));
+            }
+        }
+        return listOfUsersWithoutGroup.stream()
+                .map(maraudGroupUserDao -> this.modelMapper.map(maraudGroupUserDao, MaraudGroupUser.class))
+                .collect(Collectors.toList());
     }
 }

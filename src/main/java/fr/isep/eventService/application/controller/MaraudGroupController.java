@@ -62,5 +62,4 @@ public class MaraudGroupController {
     public ResponseEntity<MaraudGroup> removeUserFromMaraudGroup(@PathVariable String groupId, @PathVariable String userId){
         return ResponseEntity.ok(this.maraudGroupServicePort.removeUserFromMaraudGroup(groupId, userId));
     }
-    //TODO faire le delete et implémenter les user
 }

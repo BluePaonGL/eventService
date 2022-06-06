@@ -34,4 +34,9 @@ public class MaraudGroupUserController {
     public ResponseEntity<List<MaraudGroupUser>> getAllMaraudGroupUsers(){
         return new ResponseEntity<>(this.maraudGroupUserServicePort.getMaraudGroupUsers(), HttpStatus.OK);
     }
+
+    @GetMapping("/nogroup/{eventId}")
+    public ResponseEntity<List<MaraudGroupUser>> getAllUsersWithNoGroupForEvent(@PathVariable String eventId){
+        return new ResponseEntity<>(this.maraudGroupUserServicePort.getAllUsersWithNoGroupForEvent(eventId), HttpStatus.OK);
+    }
 }
