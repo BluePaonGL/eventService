@@ -15,6 +15,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MaraudGroupUserDao {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -22,8 +23,7 @@ public class MaraudGroupUserDao {
     private String id;
     private String userId;
 
-    @ManyToMany(mappedBy = "users")
-    Set<MaraudGroupDao> listOfMaraudGroups;
+    private String groupId;
 
     @Override
     public boolean equals(Object o) {

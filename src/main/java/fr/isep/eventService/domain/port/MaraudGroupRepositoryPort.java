@@ -20,5 +20,7 @@ public interface MaraudGroupRepositoryPort {
     MaraudGroup removeUserFromMaraudGroup(MaraudGroup maraudGroup, String userId);
     List<MaraudGroup> findAll();
 
+    List<String> getAllUserInGroup(String groupId);
+
     void delete(String groupId);
 }

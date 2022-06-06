@@ -23,12 +23,7 @@ public class MaraudGroupDao {
     private String eventId;
     private String groupLabel;
 
-    @ManyToMany
-    @JoinTable(
-            name = "MaraudGroupUser",
-            joinColumns = @JoinColumn(name = "groupId"),
-            inverseJoinColumns = @JoinColumn(name = "userId")
-    )
+    @OneToMany(targetEntity = MaraudGroupUserDao.class)
     Set<MaraudGroupUserDao> users;
 
     @Override
