@@ -34,12 +34,12 @@ public class EventController {
     }
 
     @GetMapping("/findEvent/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable String id){
+    public ResponseEntity<Event> getEventById(@PathVariable String id) {
         return new ResponseEntity<>(this.eventServicePort.getEvent(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteEvent/{id}")
-    public void deleteEvent(@PathVariable String id){
+    public void deleteEvent(@PathVariable String id) {
         this.eventServicePort.deleteEvent(id);
     }
 
@@ -50,13 +50,18 @@ public class EventController {
     }
 
     @GetMapping("/eventsByParticipantId/{participantId}")
-    public ResponseEntity<List<Event>> getEventsByParticipantId(@PathVariable String participantId){
+    public ResponseEntity<List<Event>> getEventsByParticipantId(@PathVariable String participantId) {
         return ResponseEntity.ok(this.eventServicePort.getEventsByParticipantId(participantId));
     }
 
     @DeleteMapping("/deleteParticipant/{eventId}/{participantId}")
-    public void deleteEventParticipant(@PathVariable String eventId, @PathVariable String participantId){
+    public void deleteEventParticipant(@PathVariable String eventId, @PathVariable String participantId) {
         this.eventServicePort.deleteParticipant(eventId, participantId);
+    }
+
+    @GetMapping("/getParticipantsNotInGroupMarauds/{eventId}")
+    public ResponseEntity<List<EventParticipantDAO>> getParticipantsNotInMaraudGroupsForGivenEvent(@PathVariable String eventId) {
+        return ResponseEntity.ok(this.eventServicePort.getParticipantsNotInMaraudGroupForEventId(eventId));
     }
 
 }

@@ -5,6 +5,7 @@ import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventPartic
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface EventParticipantRepository extends JpaRepository<EventParticipantDAO, Long> {
@@ -14,4 +15,5 @@ public interface EventParticipantRepository extends JpaRepository<EventParticipa
 
     EventParticipantDAO findByEventIdAndParticipantId(String eventId, String ParticipantId);
 
+    List<EventParticipantDAO> findByEventIdIsAndParticipantIdNotIn(String eventId, Collection<String> participantIds);
 }

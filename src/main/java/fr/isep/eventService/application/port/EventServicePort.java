@@ -22,4 +22,5 @@ public interface EventServicePort {
 
     void deleteParticipant(String eventId, String participantId);
 
+    List<EventParticipantDAO> getParticipantsNotInMaraudGroupForEventId(String eventId);
 }

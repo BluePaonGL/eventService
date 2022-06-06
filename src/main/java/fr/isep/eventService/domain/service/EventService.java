@@ -28,6 +28,7 @@ public class EventService implements EventServicePort {
         Event event = modelMapper.map(eventDto, Event.class);
         return this.eventRepositoryPort.save(event);
     }
+
     @Override
     public Event getEvent(String eventId) {
         Event event = this.eventRepositoryPort.findByEventId(eventId);
@@ -68,6 +69,11 @@ public class EventService implements EventServicePort {
     @Override
     public void deleteParticipant(String eventId, String participantId) {
         this.eventRepositoryPort.deleteEventParticipant(eventId, participantId);
+    }
+
+    @Override
+    public List<EventParticipantDAO> getParticipantsNotInMaraudGroupForEventId(String eventId) {
+        return this.eventRepositoryPort.getParticipantsNotInMaraudGroupsForEventId(eventId);
     }
 
 }

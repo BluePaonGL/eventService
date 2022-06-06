@@ -9,6 +9,7 @@ import java.util.List;
 public interface EventRepositoryPort {
 
     Event findByEventId(String eventId);
+
     Event save(Event event);
 
     List<Event> findAll();
@@ -23,4 +24,5 @@ public interface EventRepositoryPort {
 
     void deleteEventParticipant(String eventId, String participantId);
 
+    List<EventParticipantDAO> getParticipantsNotInMaraudGroupsForEventId(String eventId);
 }
