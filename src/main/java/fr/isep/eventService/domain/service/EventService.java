@@ -32,8 +32,9 @@ public class EventService implements EventServicePort {
     @Override
     public Event getEvent(String eventId) {
         Event event = this.eventRepositoryPort.findByEventId(eventId);
-        event.setParticipantsId(this.eventRepositoryPort.getAllParticipantByEventId(eventId));
-
+        if(event != null){
+            event.setParticipantsId(this.eventRepositoryPort.getAllParticipantByEventId(eventId));
+        }
         return event;
     }
 

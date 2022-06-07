@@ -36,11 +36,14 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     @Override
     public Event findByEventId(String eventId) {
         EventDAO eventDAOOptional = this.eventRepository.findByEventId(eventId);
-        try {
-            return modelMapper.map(eventDAOOptional, Event.class);
-        } catch (NoSuchElementException exception) {
-            throw new NoSuchElementException("This event does not exist in the database", exception);
+        if(eventDAOOptional != null){
+            try {
+                return modelMapper.map(eventDAOOptional, Event.class);
+            } catch (NoSuchElementException exception) {
+                throw new NoSuchElementException("This event does not exist in the database", exception);
+            }
         }
+        return null;
     }
 
     @Override
