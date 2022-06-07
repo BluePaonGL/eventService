@@ -74,13 +74,17 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     @Override
     public List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId) {
-        List<String> maraudGroupIdList = this.maraudGroupMemberRepository.getMaraudGroupMemberDAOSByMemberId(memberId)
-                .stream().map(MaraudGroupMemberDAO::getMaraudGroupId)
-                .collect(Collectors.toList());
+        List<MaraudGroupMemberDAO> maraudGroupMemberDAOList = this.maraudGroupMemberRepository.getMaraudGroupMemberDAOSByMemberId(memberId);
         List<MaraudGroup> result = new ArrayList<>();
-        for (String maraudGroupId : maraudGroupIdList) {
-            result.add(this.modelMapper.map(this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId), MaraudGroup.class));
+        if(maraudGroupMemberDAOList.size()!=0){
+            List<String> maraudGroupIdList = maraudGroupMemberDAOList
+                    .stream().map(MaraudGroupMemberDAO::getMaraudGroupId)
+                    .collect(Collectors.toList());
+            for (String maraudGroupId : maraudGroupIdList) {
+                result.add(this.modelMapper.map(this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId), MaraudGroup.class));
+            }
         }
+
         return result;
     }
 

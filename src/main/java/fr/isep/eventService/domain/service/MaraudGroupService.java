@@ -41,9 +41,12 @@ public class MaraudGroupService implements MaraudGroupServicePort {
     @Override
     public List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId) {
         List<MaraudGroup> result = this.maraudGroupRepositoryPort.getAllMaraudGroupsByMemberId(memberId);
-        for (MaraudGroup maraudGroup : result) {
-            maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroup.getMaraudGroupId()));
+        if(result != null){
+            for (MaraudGroup maraudGroup : result) {
+                maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroup.getMaraudGroupId()));
+            }
         }
+
         return result;
     }
 
