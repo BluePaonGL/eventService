@@ -56,11 +56,14 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     @Override
     public MaraudGroup findByMaraudGroupId(String maraudGroupId) {
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId);
-        try {
-            return modelMapper.map(maraudGroupDao, MaraudGroup.class);
-        } catch (NoSuchElementException exception) {
-            throw new NoSuchElementException("This maraud group does not exist in the database", exception);
+        if(maraudGroupDao != null){
+            try {
+                return modelMapper.map(maraudGroupDao, MaraudGroup.class);
+            } catch (NoSuchElementException exception) {
+                throw new NoSuchElementException("This maraud group does not exist in the database", exception);
+            }
         }
+        return null;
     }
 
     @Override

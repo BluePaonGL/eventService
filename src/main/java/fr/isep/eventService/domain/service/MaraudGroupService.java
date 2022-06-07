@@ -23,7 +23,9 @@ public class MaraudGroupService implements MaraudGroupServicePort {
     @Override
     public MaraudGroup getMaraudGroupById(String maraudGroupId) {
         MaraudGroup maraudGroup = this.maraudGroupRepositoryPort.findByMaraudGroupId(maraudGroupId);
-        maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroupId));
+        if(maraudGroup != null){
+            maraudGroup.setMaraudGroupMembers(this.maraudGroupRepositoryPort.getAllMemberByMaraudGroupId(maraudGroupId));
+        }
         return maraudGroup;
     }
 
