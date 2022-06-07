@@ -12,4 +12,6 @@ public interface MaraudGroupMemberRepository extends JpaRepository<MaraudGroupMe
 
     MaraudGroupMemberDAO findByMaraudGroupIdAndMemberId(String maraudGroupId, String memberId);
 
+    List<MaraudGroupMemberDAO> findAllByMaraudGroupId(String maraudGroupId);
+
 }

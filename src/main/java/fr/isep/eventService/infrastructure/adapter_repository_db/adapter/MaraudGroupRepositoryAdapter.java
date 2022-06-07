@@ -47,6 +47,10 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     @Override
     public void deleteMaraudGroup(String maraudGroupId) {
         this.maraudGroupRepository.delete(this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId));
+        List<MaraudGroupMemberDAO> maraudGroupMemberDAOList = this.maraudGroupMemberRepository.findAllByMaraudGroupId(maraudGroupId);
+        for(MaraudGroupMemberDAO maraudGroupMemberDAO : maraudGroupMemberDAOList){
+            this.maraudGroupMemberRepository.delete(this.maraudGroupMemberRepository.findByMaraudGroupIdAndMemberId(maraudGroupId, maraudGroupMemberDAO.getMemberId()));
+        }
     }
 
     @Override
