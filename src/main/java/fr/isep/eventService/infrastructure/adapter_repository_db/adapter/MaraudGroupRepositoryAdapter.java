@@ -1,25 +1,19 @@
 package fr.isep.eventService.infrastructure.adapter_repository_db.adapter;
 
 import fr.isep.eventService.application.DTO.MaraudGroupMemberDto;
-import fr.isep.eventService.domain.criteria.MaraudGroupCriteria;
-import fr.isep.eventService.domain.model.Event;
 import fr.isep.eventService.domain.model.MaraudGroup;
 import fr.isep.eventService.domain.port.MaraudGroupRepositoryPort;
-import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventDAO;
-import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.EventParticipantDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupMemberDAO;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupMemberRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.repository.MaraudGroupRepository;
 import fr.isep.eventService.infrastructure.adapter_repository_db.DAO.MaraudGroupDao;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -46,17 +40,20 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     @Override
     public void deleteMaraudGroup(String maraudGroupId) {
-        this.maraudGroupRepository.delete(this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId));
-        List<MaraudGroupMemberDAO> maraudGroupMemberDAOList = this.maraudGroupMemberRepository.findAllByMaraudGroupId(maraudGroupId);
-        for(MaraudGroupMemberDAO maraudGroupMemberDAO : maraudGroupMemberDAOList){
-            this.maraudGroupMemberRepository.delete(this.maraudGroupMemberRepository.findByMaraudGroupIdAndMemberId(maraudGroupId, maraudGroupMemberDAO.getMemberId()));
+        MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId);
+        if (maraudGroupDao != null) {
+            this.maraudGroupRepository.delete(maraudGroupDao);
+            List<MaraudGroupMemberDAO> maraudGroupMemberDAOList = this.maraudGroupMemberRepository.findAllByMaraudGroupId(maraudGroupId);
+            for (MaraudGroupMemberDAO maraudGroupMemberDAO : maraudGroupMemberDAOList) {
+                this.maraudGroupMemberRepository.delete(this.maraudGroupMemberRepository.findByMaraudGroupIdAndMemberId(maraudGroupId, maraudGroupMemberDAO.getMemberId()));
+            }
         }
     }
 
     @Override
     public MaraudGroup findByMaraudGroupId(String maraudGroupId) {
         MaraudGroupDao maraudGroupDao = this.maraudGroupRepository.findByMaraudGroupId(maraudGroupId);
-        if(maraudGroupDao != null){
+        if (maraudGroupDao != null) {
             try {
                 return modelMapper.map(maraudGroupDao, MaraudGroup.class);
             } catch (NoSuchElementException exception) {
@@ -76,7 +73,7 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
     public List<MaraudGroup> getAllMaraudGroupsByMemberId(String memberId) {
         List<MaraudGroupMemberDAO> maraudGroupMemberDAOList = this.maraudGroupMemberRepository.getMaraudGroupMemberDAOSByMemberId(memberId);
         List<MaraudGroup> result = new ArrayList<>();
-        if(maraudGroupMemberDAOList.size()!=0){
+        if (maraudGroupMemberDAOList.size() != 0) {
             List<String> maraudGroupIdList = maraudGroupMemberDAOList
                     .stream().map(MaraudGroupMemberDAO::getMaraudGroupId)
                     .collect(Collectors.toList());
@@ -106,6 +103,9 @@ public class MaraudGroupRepositoryAdapter implements MaraudGroupRepositoryPort {
 
     @Override
     public void deleteMaraudGroupMember(String participantId, String maraudGroupId) {
-        this.maraudGroupMemberRepository.delete(this.maraudGroupMemberRepository.findByMaraudGroupIdAndMemberId(maraudGroupId, participantId));
+        MaraudGroupMemberDAO maraudGroupMemberDAO = this.maraudGroupMemberRepository.findByMaraudGroupIdAndMemberId(maraudGroupId, participantId);
+        if (maraudGroupMemberDAO != null) {
+            this.maraudGroupMemberRepository.delete(maraudGroupMemberDAO);
+        }
     }
 }

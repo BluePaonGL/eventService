@@ -36,7 +36,7 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     @Override
     public Event findByEventId(String eventId) {
         EventDAO eventDAOOptional = this.eventRepository.findByEventId(eventId);
-        if(eventDAOOptional != null){
+        if (eventDAOOptional != null) {
             try {
                 return modelMapper.map(eventDAOOptional, Event.class);
             } catch (NoSuchElementException exception) {
@@ -61,10 +61,13 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
 
     @Override
     public void deleteEvent(String eventId) {
-        this.eventRepository.delete(this.eventRepository.findByEventId(eventId));
-        List<String> eventParticipantsList = this.getAllParticipantByEventId(eventId);
-        for (String eventParticipantId : eventParticipantsList){
-            this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, eventParticipantId));
+        EventDAO eventDAO = this.eventRepository.findByEventId(eventId);
+        if (eventDAO != null) {
+            this.eventRepository.delete(eventDAO);
+            List<String> eventParticipantsList = this.getAllParticipantByEventId(eventId);
+            for (String eventParticipantId : eventParticipantsList) {
+                this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, eventParticipantId));
+            }
         }
     }
 
@@ -96,7 +99,10 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     }
 
     public void deleteEventParticipant(String eventId, String participantId) {
-        this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, participantId));
+        EventParticipantDAO eventParticipantDAO = this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, participantId);
+        if (eventParticipantDAO != null) {
+            this.eventParticipantRepository.delete(eventParticipantDAO);
+        }
     }
 
     @Override
