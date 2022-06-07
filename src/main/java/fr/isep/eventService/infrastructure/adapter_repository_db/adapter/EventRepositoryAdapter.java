@@ -62,14 +62,14 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     @Override
     public void deleteEvent(String eventId) {
         this.eventRepository.delete(this.eventRepository.findByEventId(eventId));
+        List<String> eventParticipantsList = this.getAllParticipantByEventId(eventId);
+        for (String eventParticipantId : eventParticipantsList){
+            this.eventParticipantRepository.delete(this.eventParticipantRepository.findByEventIdAndParticipantId(eventId, eventParticipantId));
+        }
     }
 
     @Override
     public EventParticipantDAO save(EventParticipantDto eventParticipant) {
-//        MaraudGroupUserDao maraudGroupUserDao = new MaraudGroupUserDao();
-//        maraudGroupUserDao.setUserId(eventParticipant.getParticipantId());
-//        this.maraudGroupUserRepository.save(maraudGroupUserDao);
-
         EventParticipantDAO eventParticipantDAO = EventParticipantDAO.builder()
                 .eventId(eventParticipant.getEventId())
                 .participantId(eventParticipant.getParticipantId())
