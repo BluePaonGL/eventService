@@ -73,7 +73,7 @@ public class EventService implements EventServicePort {
     }
 
     @Override
-    public List<EventParticipantDAO> getParticipantsNotInMaraudGroupForEventId(String eventId) {
+    public List<String> getParticipantsNotInMaraudGroupForEventId(String eventId) {
         return this.eventRepositoryPort.getParticipantsNotInMaraudGroupsForEventId(eventId);
     }
 

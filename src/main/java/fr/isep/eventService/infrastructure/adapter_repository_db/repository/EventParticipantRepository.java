@@ -15,5 +15,7 @@ public interface EventParticipantRepository extends JpaRepository<EventParticipa
 
     EventParticipantDAO findByEventIdAndParticipantId(String eventId, String ParticipantId);
 
+    List<EventParticipantDAO> findEventParticipantDAOSByEventIdAndParticipantIdNotIn(String eventId, Collection<String> participantIds);
+
     List<EventParticipantDAO> findByEventIdIsAndParticipantIdNotIn(String eventId, Collection<String> participantIds);
 }

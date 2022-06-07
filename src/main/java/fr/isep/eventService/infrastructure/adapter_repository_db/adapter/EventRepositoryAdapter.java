@@ -106,16 +106,31 @@ public class EventRepositoryAdapter implements EventRepositoryPort {
     }
 
     @Override
-    public List<EventParticipantDAO> getParticipantsNotInMaraudGroupsForEventId(String eventId) {
+    public List<String> getParticipantsNotInMaraudGroupsForEventId(String eventId) {
         List<MaraudGroupDao> maraudGroupDaos = this.maraudGroupRepository.findAllByEventId(eventId);
         List<String> participantsInMaraudGroups = new ArrayList<>();
-
         for (MaraudGroupDao maraudGroupDao : maraudGroupDaos) {
             List<MaraudGroupMemberDAO> maraudGroupMemberDAOS = this.maraudGroupMemberRepository.getMaraudGroupMemberDAOSByMaraudGroupId(maraudGroupDao.getMaraudGroupId());
             for (MaraudGroupMemberDAO maraudGroupMemberDAO : maraudGroupMemberDAOS) {
                 participantsInMaraudGroups.add(maraudGroupMemberDAO.getMemberId());
             }
         }
-        return this.eventParticipantRepository.findByEventIdIsAndParticipantIdNotIn(eventId, participantsInMaraudGroups);
+        List<EventParticipantDAO> eventParticipant = this.eventParticipantRepository.getEventParticipantDAOSByEventId(eventId);
+
+        boolean inMaraudGroup;
+        List<String> participantsIdNotInGroups = new ArrayList<>();
+        for(EventParticipantDAO eventParticipantDAO : eventParticipant){
+            inMaraudGroup = false;
+            for(String maraudGroupMemberId : participantsInMaraudGroups){
+                if (maraudGroupMemberId.equals(eventParticipantDAO.getParticipantId())) {
+                    inMaraudGroup = true;
+                    break;
+                }
+            }
+            if(!inMaraudGroup){
+                participantsIdNotInGroups.add(eventParticipantDAO.getParticipantId());
+            }
+        }
+        return participantsIdNotInGroups;
     }
 }

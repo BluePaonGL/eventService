@@ -60,7 +60,7 @@ public class EventController {
     }
 
     @GetMapping("/getParticipantsNotInGroupMarauds/{eventId}")
-    public ResponseEntity<List<EventParticipantDAO>> getParticipantsNotInMaraudGroupsForGivenEvent(@PathVariable String eventId) {
+    public ResponseEntity<List<String>> getParticipantsNotInMaraudGroupsForGivenEvent(@PathVariable String eventId) {
         return ResponseEntity.ok(this.eventServicePort.getParticipantsNotInMaraudGroupForEventId(eventId));
     }
 
